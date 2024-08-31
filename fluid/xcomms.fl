@@ -1,0 +1,82 @@
+# data file for the Fltk User Interface Designer (fluid)
+version 1.0105 
+header_name {.h} 
+code_name {.cxx}
+Function {options()} {open
+} {
+  Fl_Window {} {
+    label Options open selected
+    xywh {389 369 225 212} type Double align 5 hide
+  } {
+    Fl_Choice PortAddress {open
+      xywh {125 13 90 17} down_box BORDER_BOX labeltype NO_LABEL labelsize 12 textsize 12
+    } {}
+    Fl_Round_Button Verify {
+      label button
+      xywh {195 45 20 25} down_box ROUND_DOWN_BOX labeltype NO_LABEL
+    }
+    Fl_Round_Button DoubleSpeed {
+      label button
+      xywh {195 75 20 25} down_box ROUND_DOWN_BOX labeltype NO_LABEL
+    }
+    Fl_Button {} {
+      label Cancel
+      xywh {25 170 60 25}
+    }
+    Fl_Button {} {
+      label OK
+      xywh {140 170 60 25}
+    }
+    Fl_Counter TxDelay {
+      label {counter:}
+      xywh {150 120 60 25} labeltype NO_LABEL align 10 minimum 0 maximum 10 step 1 value 1
+    }
+    Fl_Box {} {
+      label {Port Address}
+      xywh {10 13 85 22} align 20
+    }
+    Fl_Box {} {
+      label {Verify Main Data}
+      xywh {10 45 140 25} align 20
+    }
+    Fl_Box {} {
+      label {Double Speed Burst}
+      xywh {10 75 140 25} align 20
+    }
+    Fl_Box {} {
+      label {Transfer Delay}
+      xywh {10 120 130 25} align 84
+    }
+  }
+} 
+
+Function {MBSend(Fl_Button*, void*)} {open
+} {
+  code {LogWindow->insert("send to GBA");} {}
+} 
+
+Function {} {open
+} {
+  Fl_Window {} {
+    label {Xboo Communicator} open
+    image {C:/projects/tools/XcommsFLTK/icons/xcomms.png} xywh {450 345 313 284} type Double hide resizable
+  } {
+    Fl_Text_Display LogWindow {
+      xywh {1 52 312 232} resizable
+    }
+    Fl_Pack {} {open
+      xywh {1 3 312 48} type HORIZONTAL
+    } {
+      Fl_Button {} {
+        callback MBSend
+        tooltip {Send GBA Multiboot image} image {C:/projects/tools/XcommsFLTK/icons/send_mb.png} xywh {1 3 48 48}
+      }
+      Fl_Button {} {
+        tooltip {Reset GBA} image {C:/projects/tools/XcommsFLTK/icons/reset.png} xywh {50 3 48 48}
+      }
+      Fl_Button {} {
+        tooltip Options image {C:/projects/tools/XcommsFLTK/icons/options.png} xywh {100 3 48 48}
+      }
+    }
+  }
+} 

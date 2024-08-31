@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+<html>
+<head>
+<title>Xboo Communicator</title>
+<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<h4>Xboo Communicator</h4>
+<p>
+Xboo Communicator is a GUI application for sending multiboot images to a GBA using the Xboo cable as designed by Martin Korth.
+</p>
+<p>
+The Send button brings up a dialog which allows you to select a GBA ROM image for transfer. The ROM must be a special multiboot image with a proper header. With devkitARM use -specs=gba_mb.specs when linking.
+</p>
+<p>
+The Reset button resets the GBA if you have connected the reset line as specified in the original Xboo documentation. That method is not documented here since it involves opening the GBA and soldering a wire directly to the circuit board.
+</p>
+<p>
+The Options button brings up a dialog where you can select the parallel port address and other options relating to the transfer.
+</p>
+<p>
+<b>Parallel Port Address</b> is usually 0x278 for Windows 98 and 0x378 for Windows 2k/XP.
+</p>
+<p>
+<b>Verify Main Data Block</b> selects whether data is verified during GBA transfer.
+</p>
+
+<p>
+<b>Enable Double Speed Burst</b> enables burst mode transfers for backdoor code (not yet implemented in Xboo Communicator).
+</p>
+
+<p>
+<b>Fix GBA header</b> automatically inserts logo and calculates complement check.
+</p>
+
+<p>
+<b>Transfer Delay</b> higher delays slow the transfer but allow time for the GBA to process each word. May be required for faster PCs, or longer cables.
+</p>
+<p>Linux users need to run Xboo Communicator with root privileges, either setuid root or sudo.</p>
+<p>You will need to install userport on Windows 2000 or XP based operating systems. This is included in the userport folder.</p>
+<h4>Installing Userport</h4>
+<p>
+The driver can be installed in the following two ways:
+</p>
+<ul>
+<li>Copy UserPort.SYS to %WINDIR%\SYSTEM32\DRIVERS<br>
+Start UserPort.EXE and add the addresses you want, remove the others and click on start.
+</li>
+<li>
+Run UserPort.EXE with the driver filename and path as an argument i.e. run UserPort.EXE X:\YOURDIR\UserPort.SYS<br>
+Add the addresses you want, remove the others and click on start.
+</li>
+</ul>
+<p>
+You should now have usermode access to the addresses you have chosen.
+</p>
+<p>
+Read the documentation with Userport for futher details.
+</p>
+<h4>Building an Xboo Cable</h4>
+<p>
+You will need a 25way D-type male connector, a GBA/GBC multiplayer cable, a small tipped soldering iron, a pair of wirecutters and a multimeter. You may need to shop around for a suitable cable, not all contain the wires needed for an Xboo cable.
+</p>
+<p>
+First cut your cable approximately halfway along it's length and expose the internal wiring. Bare the ends of the internal wires and, using your multimeter determine which wires connect to which pin on the link port plug. The GBA Pins are arranged from left to right as 5,3,1 in upper row, and 6,4,2 in lower row, looking into the GBA socket with the key notch uppermost as shown in the diagram. Please note that this arrangement is reversed when looking into the end of the plug on the end of the cable.
+</p>
+<center>
+<img alt="Xboo Schematic (25K)" src="xboo_schematic.png" height="512" width="512"/>
+</center>
+<p>
+Wire your cable as follows, referring to the above schematic. The 25way connector is shown from the solder side - pin 1 is on the top right when looking at the solder side with the widest part of the connector uppermost.
+</p>
+<pre>
+  GBA  Name                 SUBD Name
+  2    SO     ------------- 10   /ACK
+  3    SI     ------------- 14   /AUTOLF
+  5    SC     ------------- 1    /STROBE
+  6    GND    ------------- 19   GND
+Optionally, also connect the following signals:
+  4    SD     ------------- 17   /SELECT  (double speed burst)
+</pre>
+<p>
+The SD line is only used for Double Speed Burst transfers. If you are using a gameboy link plug for the connection, without the SD-pin, then you may leave out this connection. Burst Boot will then only work half as fast though.
+</p>
+
+<p>
+Check your wiring carefully, the authors accept no responsibility for any damage which may occur as a result of building this cable.
+</p>
+<p>
+The original xboo software and documentation may be found at <a href="http://www.work.de/nocash/gba-xboo.htm" target="_blank">Martin Korth's site</a>.
+</p>
+
+
+
+<h4>History</h4>
+
+Version 1.22
+<li>Use native file selector instead of FLU selector.</li>
+Version 1.20
+<li>Alert box on linux when not run with root privileges.</li>
+Version 1.19
+<li>added header fixing</li>
+<li>added keyboard handling</li>
+Version 1.18
+<li>fixed processor hogging</li>
+<li>minor improvements in file server code</li>
+<li>added windows application icon</li>
+<li>console window now autoscrolls</li>
+Version 1.16
+<li>added command line parameters - now boots file on command line and sets file server path</li>
+Version 1.13
+<li>added checks for userport install</li>
+<li>fixed port access problems with XP</li>
+Version 1.12
+<li>ported to linux</li>
+<li>GUI written with fltk for portability</li>
+Version 1.11
+<li>debug console and file server added</li>
+Version 1.10
+<li>First windows release</li>
+</html>
+
+
+

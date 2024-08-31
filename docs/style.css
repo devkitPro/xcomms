@@ -1,0 +1,52 @@
+h1,h2,h3
+{
+font-family: verdana, arial, 'sans serif';
+}
+
+p,table,li
+{
+font-family: verdana, arial, 'sans serif';
+margin-left: 10pt;
+}
+
+ul
+{
+list-style: disc;
+}
+
+ol
+{
+list-style: decimal;
+}
+
+p,li,th,td
+{
+font-size: 90%;
+}
+
+body
+{
+background-color: #ACD6F6;
+}
+
+h1,h2,h3,hr
+{
+color:black;
+}
+
+pre {
+	background-color: AntiqueWhite;
+	border: black solid 1px;
+	color: black;
+	margin-left: 5em;
+	width: 50em;
+}
+
+
+
+a:link    {color:red}
+a:visited {color:black}
+a:active  {color:mediumblue}
+a:hover   {color:purple}
+
+
