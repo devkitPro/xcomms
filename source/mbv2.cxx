@@ -47,7 +47,7 @@ int inp ( short address) {
 void TimerDelay2 (int delay) {
 //-----------------------------------------------------------------------------
 
-	unsigned long delayms = delay * 9;
+	unsigned int delayms = delay * 9;
 	
 #ifdef __linux__
 	
