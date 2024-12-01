@@ -228,15 +228,12 @@ void GBAConsole()
 					break;
 				//---------------------------------------------------------
 				case FCLOSE_CMD:
-					if (code < MAX_FILES)
+					if (code < MAX_FILES && Files[code].handle)
 					{
-						if (Files[code].handle)
-						{
-							fclose(Files[code].handle);
-							Log("Closed handle %d - %s\n",code,Files[code].name);
-							Files[code].handle = NULL;
-							OpenFiles--;
-						}
+						fclose(Files[code].handle);
+						Log("Closed handle %d - %s\n",code,Files[code].name);
+						Files[code].handle = NULL;
+						OpenFiles--;
 					}
 					break;
 				//---------------------------------------------------------
@@ -245,14 +242,14 @@ void GBAConsole()
 					while(ReadSOState());
 					data = XbooExchange32(0);
 
-					if (Files[code].handle)
+					if (code < MAX_FILES && Files[code].handle)
 					{
 						fputc(data,Files[code].handle);
 					}
 					break;
 				//---------------------------------------------------------
 				case FGETC_CMD:
-					if (Files[code].handle)
+					if (code < MAX_FILES && Files[code].handle)
 					{
 						data = fgetc(Files[code].handle);
 					}
@@ -270,7 +267,7 @@ void GBAConsole()
 					while (ReadSOState());
 					seek_origin = XbooExchange32(data);
 
-					if (Files[code].handle)
+					if (code < MAX_FILES && Files[code].handle)
 					{
 						fseek(Files[code].handle,seek_offset,seek_origin);
 						Log("Seek on %s: Offset %d Origin %d\n",Files[code].name, seek_offset, seek_origin);
@@ -279,7 +276,7 @@ void GBAConsole()
 				//---------------------------------------------------------
 				case FTELL_CMD:
 					data = 0xffffffff;
-					if (Files[code].handle)
+					if (code < MAX_FILES && Files[code].handle)
 					{
 						data = ftell(Files[code].handle);
 						Log("Ftell on %s\n",Files[code].name);
@@ -303,7 +300,7 @@ void GBAConsole()
 					read_buffer = (unsigned char *)malloc( ((read_length)+3)&-4);
 					read_ptr = read_buffer;
 
-					if (Files[code].handle)
+					if (code < MAX_FILES && Files[code].handle)
 					{
 						fread(read_buffer,read_size,read_count,Files[code].handle);
 						Log("Read %d bytes from %s\n",read_length,Files[code].name);
@@ -351,7 +348,7 @@ void GBAConsole()
 
 					}
 
-					if (Files[code].handle)
+					if (code < MAX_FILES && Files[code].handle)
 					{
 						fwrite(read_buffer,read_size,read_count,Files[code].handle);
 						Log("Wrote %d bytes to %s\n",read_size*read_count,Files[code].name);
