@@ -29,7 +29,11 @@ void ReadConfigFile(const char *file)
 		XcommsCfg.delay		= 1;
 		XcommsCfg.verify	= 1;
 		XcommsCfg.headerfix	= 1;
+#ifdef __WIN32__
 		XcommsCfg.Port		= 0x378;
+#else
+		XcommsCfg.Port		= 0x0;
+#endif
 		XcommsCfg.x			= 0;
 		XcommsCfg.y			= 0;
 		XcommsCfg.width		= WIN_MIN_WIDTH;

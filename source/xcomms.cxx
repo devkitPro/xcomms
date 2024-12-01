@@ -66,11 +66,6 @@ void quit(Fl_Button*, void*)
 
 	WriteConfigFile(ConfigFile.c_str());
 
-#ifndef __WIN32__
-	ioperm(0x278, 4, 0);
-	ioperm(0x378, 4, 0);
-#endif
-
 	exit(0);
 }
 
@@ -78,10 +73,10 @@ char GBArom[256*1024];
 
 typedef struct
 {
-	unsigned long	start_code;			// B instruction
+	uint32_t start_code;			// B instruction
 	unsigned char	logo[0xA0-0x04];	// logo data
 	char			title[0xC];			// game title name
-	unsigned long	game_code;			//
+	uint32_t game_code;			//
 	unsigned short	maker_code;			//
 	unsigned char	fixed;				// 0x96
 	unsigned char	unit_code;			// 0x00
@@ -291,17 +286,12 @@ int main(int argc, char **argv)
 	LogWindow->buffer()->add_modify_callback(LogChanged_cb, xcomms);
 
 
-	Log("Xboo Communicator "VERSION" - %s\n", __DATE__);
+	Log("Xboo Communicator " VERSION " - %s\n", __DATE__);
 	#ifdef __WIN32__
 		separator = "\\";
 
 	#else
 		separator = "/";
-		if ( ioperm(0x278, 4, 1) || ioperm(0x378, 4, 1) ) {
-			fl_alert("Xboo Conmmunicator requires root privileges\nfor raw parallel port access");
-			exit(0);
-		}
-
 	#endif
 
 #ifdef __MINGW32__

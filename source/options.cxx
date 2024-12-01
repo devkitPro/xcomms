@@ -21,7 +21,11 @@ Fl_Counter *TxDelay;
 void OptionsOK()
 //-----------------------------------------------------------------------------
 {
+#ifdef __WIN32__
 	SetPortAddress(Port->value()?0x378:0x278);
+#else
+	SetPortAddress(Port->value());
+#endif
 	SetVerify(Verify->value());
 //	SetBurst(DoubleSpeed->value());
 	SetDelay((int)TxDelay->value());
@@ -51,9 +55,17 @@ void Options()
 		o->labeltype(FL_NO_LABEL);
 		o->labelsize(12);
 		o->textsize(12);
+#ifdef __WIN32__
 		o->add("0x278|0x378");
+#else
+		o->add("0|1");
+#endif
 		int index = 0;
+#ifdef __WIN32__
 		if (GetPortAddress() == 0x378) index = 1;
+#else
+		index = GetPortAddress();
+#endif
 		o->value(index);
 	}
 	{ Fl_Choice* o = Hardware = new Fl_Choice(125, 40, 90, 20);
